@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@use './style/reset.scss';
+@use './style/variables.scss';
+@use './style/rem-calc.scss';
+
+html {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary-color);
+}
+
+main {
+    max-width: rem-calc(600);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
