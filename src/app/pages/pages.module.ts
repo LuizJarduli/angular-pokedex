@@ -3,10 +3,13 @@ import { CommonModule } from '@angular/common';
 
 /** Components */
 import { HomeComponent } from './home/home.component';
-
-/** Routes */
-import { PagesRoutingModule } from './pages-routing.module';
 import { DetailsComponent } from './details/details.component';
+
+/** Routes  */
+import { PagesRoutingModule } from './pages-routing.module';
+
+/** Modules */
+import { ComponentsModule } from './../components/components.module';
 
 @NgModule({
     declarations: [
@@ -16,6 +19,7 @@ import { DetailsComponent } from './details/details.component';
     imports: [
         CommonModule,
         PagesRoutingModule,
+        ComponentsModule
     ]
 })
 export class PagesModule { }

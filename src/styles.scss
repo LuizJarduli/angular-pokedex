@@ -1,6 +1,6 @@
-@use './style/reset.scss';
-@use './style/variables.scss';
-@use './style/rem-calc.scss';
+@import './style/reset.scss';
+@import './style/variables.scss';
+@import './style/rem-calc.scss';
 
 html {
     font-family: 'Roboto', sans-serif;
@@ -8,11 +8,7 @@ html {
 }
 
 main {
-    max-width: rem-calc(600);
+    width: rem-calc(600);
     box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    justify-content: center;
-    align-items: center;
+    margin: 0 auto;
 }
