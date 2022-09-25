@@ -10,7 +10,7 @@ import { IPokedex, IPokeListItemModel, IPokeListModel } from '../interfaces';
 export class PokeApiService {
 
     /** URL base para busca na API */
-    private baseUrl: string = 'https://pokeapi.co/api/v2/pokemon/?limit=100&offset=0';
+    private baseUrl: string = 'https://pokeapi.co/api/v2/pokemon/?limit=100offset=0';
 
     constructor(private http: HttpClient) { }
 
@@ -25,7 +25,7 @@ export class PokeApiService {
                     /** Passa por cada item da lista para pegar o getbyId do pokemon que está sendo iterado no momento */
                     response.results.map((pokemon: IPokeListItemModel) => this.apiGetPokemons(pokemon.url)
                         .subscribe({
-                            next: (pokemonSpecificData: IPokedex.Pokemon) => pokemonSpecificData,
+                            next: (pokemonSpecificData: IPokedex.Pokemon) => pokemon.status = pokemonSpecificData,
                             error: (error: any) => console.log(error),
                         }));
                 })
@@ -37,7 +37,7 @@ export class PokeApiService {
      *
      * @param url Endpoint informado para recuperação dos dados do pokemon
      */
-    public apiGetPokemons(url: string): Observable<IPokedex.Pokemon> {
+    public apiGetPokemons(url: string): Observable<any> {
         return this.http.get<IPokedex.Pokemon>(url)
             .pipe(map((pokemonSpecificData: IPokedex.Pokemon) => pokemonSpecificData))
     }

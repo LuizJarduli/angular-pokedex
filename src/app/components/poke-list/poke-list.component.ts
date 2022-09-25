@@ -1,4 +1,7 @@
+import { IPokeListModel } from './../../interfaces/poke-list.interface';
+import { PokeApiService } from './../../services/poke-api.service';
 import { Component, OnInit } from '@angular/core';
+import { IPokeListItemModel } from 'src/app/interfaces';
 
 @Component({
   selector: 'poke-list',
@@ -7,9 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PokeListComponent implements OnInit {
 
-  constructor() { }
+    public getAllPokemons: IPokeListItemModel[] = [];
+    private setAllPokemons: IPokeListItemModel[] = [];
 
-  ngOnInit(): void {
-  }
+    constructor(private pokeApiService: PokeApiService) {}
+
+    ngOnInit(): void {
+        this.pokeApiService.apiListAllPokemons.subscribe({
+            next: (response: IPokeListModel) => {
+                this.setAllPokemons = response.results
+                this.getAllPokemons = [...this.setAllPokemons];
+            },
+        });
+    }
+
+    public getSearch(valueEmitted: string): void {
+        this.getAllPokemons = [
+            ...this.setAllPokemons.filter((pokemon: IPokeListItemModel) => {
+                return !pokemon.name.indexOf(valueEmitted.toLocaleLowerCase());
+            })
+        ];
+    }
 
 }
