@@ -1,3 +1,4 @@
+import { LoadingService } from './../../services/loading.service';
 import { IPokeListModel } from './../../interfaces/poke-list.interface';
 import { PokeApiService } from './../../services/poke-api.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,7 @@ export class PokeListComponent implements OnInit {
     public getAllPokemons: IPokeListItemModel[] = [];
     private setAllPokemons: IPokeListItemModel[] = [];
 
-    constructor(private pokeApiService: PokeApiService) {}
+    constructor(private pokeApiService: PokeApiService, private loadingService: LoadingService) {}
 
     ngOnInit(): void {
         this.pokeApiService.apiListAllPokemons.subscribe({
@@ -32,4 +33,7 @@ export class PokeListComponent implements OnInit {
         ];
     }
 
+    public isRenderingImage(value: boolean): void {
+        value ? this.loadingService.hide() : this.loadingService.show();
+    }
 }
