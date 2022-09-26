@@ -1,3 +1,4 @@
+import { LoadingService } from './loading.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -10,14 +11,15 @@ import { IPokedex, IPokeListItemModel, IPokeListModel } from '../interfaces';
 export class PokeApiService {
 
     /** URL base para busca na API */
-    private baseUrl: string = 'https://pokeapi.co/api/v2/pokemon/?limit=100offset=0';
+    private baseUrl: string = 'https://pokeapi.co/api/v2/pokemon/?limit=100&offset=0';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private loadingService: LoadingService) { }
 
     /**
      * Recupera todos os pokemons e seus devidos stat's
      */
     get apiListAllPokemons(): Observable<IPokeListModel> {
+        this.loadingService.show();
         return this.http.get<IPokeListModel>(this.baseUrl)
             .pipe(
                 tap((response: IPokeListModel) => response),
@@ -27,6 +29,7 @@ export class PokeApiService {
                         .subscribe({
                             next: (pokemonSpecificData: IPokedex.Pokemon) => pokemon.status = pokemonSpecificData,
                             error: (error: any) => console.log(error),
+                            complete: () => this.loadingService.hide(),
                         }));
                 })
             );
